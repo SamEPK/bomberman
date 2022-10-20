@@ -120,35 +120,38 @@ void placer_murs_destructibles(int longeur, int largeur, int nb_joueur, char car
 #define DROITE 77
 void poser_bombe(int longeur, int largeur, char carte[longeur][largeur], int x, int y)
 {
-    for (int i = 0; i < longeur; i++)
-    {
-        for (int j = 0; j < largeur; j++)
-        {
-            if (carte[x][y] == 178)
-            {
-                carte[x][y] = ' ';
-                carte[x][y + 1] = ' ';
-                carte[x + 1][y] = ' ';
-                carte[x + 1][y + 1] = ' ';
-                carte[x][y - 1] = ' ';
-                carte[x - 1][y] = ' ';
-                carte[x - 1][y - 1] = ' ';
+    carte[x][y] = 254;
+    carte[x - 1][y] = ' ';
+    carte[x + 1][y] = ' ';
+    carte[x][y - 1] = ' ';
+    carte[x][y + 1] = ' ';
 
-                carte[x][y + 2] = ' ';
-                carte[x + 2][y] = ' ';
-                carte[x + 2][y + 2] = ' ';
-                carte[x][y - 2] = ' ';
-                carte[x - 2][y] = ' ';
-                carte[x - 2][y - 2] = ' ';
+    carte[x - 1][y - 1] = ' ';
+    carte[x - 1][y + 1] = ' ';
+    carte[x + 1][y - 1] = ' ';
+    carte[x + 1][y + 1] = ' ';
 
+    carte[x - 2][y] = ' ';
+    carte[x + 2][y] = ' ';
+    carte[x][y - 2] = ' ';
+    carte[x][y + 2] = ' ';
 
+    carte[x - 2][y - 1] = ' ';
+    carte[x - 2][y + 1] = ' ';
+    carte[x + 2][y - 1] = ' ';
+    carte[x + 2][y + 1] = ' ';
 
-            }
+    carte[x - 1][y - 2] = ' ';
+    carte[x - 1][y + 2] = ' ';
+    carte[x + 1][y - 2] = ' ';
+    carte[x + 1][y + 2] = ' ';
+
+    carte[x - 2][y - 2] = ' ';
+    carte[x - 2][y + 2] = ' ';
+    carte[x + 2][y - 2] = ' ';
+    carte[x + 2][y + 2] = ' ';
+
         }
-    }
-
-
-}
 void deplacer_joueur1(int longeur, int largeur, char carte[longeur][largeur])
 {
     int x = 1;
@@ -261,3 +264,5 @@ int main()
     }
     return 0;
 } 
+
+
