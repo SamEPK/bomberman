@@ -27,11 +27,11 @@ void initialiser_carte(int longeur, int largeur, int nb_joueur, char carte[longe
         {
             if (i == 0 || i == longeur - 1)
             {
-                carte[i][j] = 219;
+                carte[i][j] = '#';
             }
             else if (j == 0 || j == largeur - 1)
             {
-                carte[i][j] = 219;
+                carte[i][j] = '#';
             }
             else if (i == 1 && j == 1 && nb_joueur >= 1)
             {
@@ -66,11 +66,11 @@ void placer_murs_indestructibles(int longeur, int largeur, int nb_joueur, char c
         {
             if (i == 0 || i == longeur - 1)
             {
-                carte[i][j] = 219;
+                carte[i][j] = '#';
             }
             else if (j == 0 || j == largeur - 1)
             {
-                carte[i][j] = 219;
+                carte[i][j] = '#';
             }
             else if (i == 1 && j == 1 && nb_joueur >= 1)
             {
@@ -90,7 +90,7 @@ void placer_murs_indestructibles(int longeur, int largeur, int nb_joueur, char c
             }
             else if (i % 2 == 0 && j % 2 == 0)
             {
-                carte[i][j] = 219;
+                carte[i][j] = '#';
             }
         }
     }
@@ -108,7 +108,7 @@ void placer_murs_destructibles(int longeur, int largeur, int nb_joueur, char car
         y = rand() % (largeur - 2) + 1;
         if (carte[x][y] == ' ')
         {
-            carte[x][y] = 178;
+            carte[x][y] = '/';
             nb_murs++;
         }
     }
@@ -120,8 +120,10 @@ void placer_murs_destructibles(int longeur, int largeur, int nb_joueur, char car
 #define DROITE 77
 void poser_bombe(int longeur, int largeur, char carte[longeur][largeur], int x, int y)
 {
+      
+  
     // if mur destructible
-    if (carte[x][y] == 178)
+    if (carte[x][y] == '/')
     {
         
     
@@ -141,23 +143,23 @@ void poser_bombe(int longeur, int largeur, char carte[longeur][largeur], int x, 
     carte[x + 2][y - 1] = ' ';
     carte[x + 2][y + 1] = ' ';
     }
-else if (carte[x][y] == 219)
+else if (carte[x][y] == '#')
     {
     carte[x][y] = 254;
-    carte[x - 1][y] = 219;
-    carte[x + 1][y] = 219;
-    carte[x][y - 1] = 219;
-    carte[x][y + 1] = 219;
+    carte[x - 1][y] = '#';
+    carte[x + 1][y] = '#';
+    carte[x][y - 1] = '#';
+    carte[x][y + 1] = '#';
 
-    carte[x - 2][y] = 219;
-    carte[x + 2][y] = 219;
-    carte[x][y - 2] = 219;
-    carte[x][y + 2] = 219;
+    carte[x - 2][y] = '#';
+    carte[x + 2][y] = '#';
+    carte[x][y - 2] = '#';
+    carte[x][y + 2] = '#';
 
-    carte[x - 2][y - 1] = 219;
-    carte[x - 2][y + 1] = 219;
-    carte[x + 2][y - 1] = 219;
-    carte[x + 2][y + 1] = 219;
+    carte[x - 2][y - 1] = '#';
+    carte[x - 2][y + 1] = '#';
+    carte[x + 2][y - 1] = '#';
+    carte[x + 2][y + 1] = '#';
         }
 }
 void deplacer_joueur1(int longeur, int largeur, char carte[longeur][largeur])
