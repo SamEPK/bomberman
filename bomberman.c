@@ -108,7 +108,7 @@ void placer_murs_destructibles(int longeur, int largeur, int nb_joueur, char car
         y = rand() % (largeur - 2) + 1;
         if (carte[x][y] == ' ')
         {
-            carte[x][y] = '/';
+            carte[x][y] = '|';
             nb_murs++;
         }
     }
@@ -118,102 +118,83 @@ void placer_murs_destructibles(int longeur, int largeur, int nb_joueur, char car
 #define BAS 80
 #define GAUCHE 75
 #define DROITE 77
-void poser_bombe(int longeur, int largeur, char carte[longeur][largeur], int x, int y)
+void poser_bombe(int longeur, int largeur, int nb_joueur, char carte[longeur][largeur], int x, int y)
 {
-      
-  
-    // if mur destructible
-    if (carte[x][y] == '/')
-    {
-        
-    
-    carte[x][y] = 254;
-    carte[x - 1][y] = ' ';
-    carte[x + 1][y] = ' ';
-    carte[x][y - 1] = ' ';
-    carte[x][y + 1] = ' ';
+    carte[x][y] = 111;
 
-    carte[x - 2][y] = ' ';
-    carte[x + 2][y] = ' ';
-    carte[x][y - 2] = ' ';
-    carte[x][y + 2] = ' ';
+                if (carte[x + 1][y] != '#' && carte[x+1][y] == '|'){
+                    carte[x + 1][y] = ' ';   
+                }
+                if (carte[x - 1][y] != '#' && carte[x-1][y] == '|'){
+                    carte[x - 1][y] = ' ';                        
+                }
+                if (carte[x][y + 1] != '#' && carte[x][y+1] == '|'){
+                    carte[x][y + 1] = ' ';
+                }
+                if (carte[x][y - 1] != '#' && carte[x][y-1] == '|'){
+                    carte[x][y - 1] = ' ';              
+                }
+                if (carte[x+2][y] != '#' && carte[x+1][y] == ' ' && carte[x+2][y] == '|'){
+                    carte[x+2][y] = ' ';
+                }
+                if (carte[x-2][y] != '#' && carte[x+1][y] == ' ' && carte[x-2][y] == '|'){
+                    carte[x-2][y] = ' ';
 
-    carte[x - 2][y - 1] = ' ';
-    carte[x - 2][y + 1] = ' ';
-    carte[x + 2][y - 1] = ' ';
-    carte[x + 2][y + 1] = ' ';
-    }
-else if (carte[x][y] == '#')
-    {
-    carte[x][y] = 254;
-    carte[x - 1][y] = '#';
-    carte[x + 1][y] = '#';
-    carte[x][y - 1] = '#';
-    carte[x][y + 1] = '#';
-
-    carte[x - 2][y] = '#';
-    carte[x + 2][y] = '#';
-    carte[x][y - 2] = '#';
-    carte[x][y + 2] = '#';
-
-    carte[x - 2][y - 1] = '#';
-    carte[x - 2][y + 1] = '#';
-    carte[x + 2][y - 1] = '#';
-    carte[x + 2][y + 1] = '#';
-        }
+                }
+                if (carte[x][y+2] != '#' && carte[x+1][y] == ' ' && carte[x][y+2] == '|'){
+                    carte[x][y+2] = ' ';
+                }
+                if (carte[x][y-2] != '#' && carte[x+1][y] != ' ' && carte[x][y-2] == '|'){
+                    carte[x][y-2] = ' ';
+                }
 }
-void deplacer_joueur1(int longeur, int largeur, char carte[longeur][largeur])
+
+
+
+
+void deplacer_joueur(int longeur, int largeur, int nb_joueur, char carte[longeur][largeur], int x, int y)
 {
-    int x = 1;
-    int y = 1;
-    int touche;
-    while (1)
+    int touche = 0;
+    touche = getch();
+    switch (touche)
     {
-        touche = getch();
-        if (touche == HAUT)
-        {
-            if (carte[x - 1][y] == ' ')
+    case HAUT:
+            if (carte[x - 1][y] != '#' && carte[x - 1][y] != '|')
             {
                 carte[x][y] = ' ';
                 x--;
                 carte[x][y] = 49;
             }
-        }
-        else if (touche == BAS)
-        {
-            if (carte[x + 1][y] == ' ')
+        break;
+    case BAS:
+            if (carte[x + 1][y] != '#'  && carte[x+1] [y] != '|')
             {
                 carte[x][y] = ' ';
                 x++;
                 carte[x][y] = 49;
             }
-        }
-        else if (touche == GAUCHE)
-        {
-            if (carte[x][y - 1] == ' ')
+        break;
+    case GAUCHE:
+            if (carte[x][y - 1] != '#' && carte[x][y - 1] != '|')
             {
                 carte[x][y] = ' ';
                 y--;
                 carte[x][y] = 49;
             }
-        }
-        else if (touche == DROITE)
-        {
-            if (carte[x][y + 1] == ' ')
+        break;
+    case DROITE:
+            if (carte[x][y + 1] != '#' && carte[x][y + 1] != '|')
             {
                 carte[x][y] = ' ';
                 y++;
                 carte[x][y] = 49;
             }
-        }
-        else if (touche == ESPACE)
-        {
-            poser_bombe(longeur, largeur, carte, x, y);
-        }
-        system("cls");
-        afficher_carte(longeur, largeur, carte);
-
-    }
+        break;
+    case ESPACE:
+        poser_bombe(longeur, largeur, nb_joueur, carte, x, y);
+        break;
+    } 
+     system("cls");
 }
 
 
@@ -249,7 +230,7 @@ int main()
         while (1)
         { 
                afficher_carte(longeur, largeur, carte);
-                deplacer_joueur1(longeur, largeur, carte);
+               deplacer_joueur(longeur, largeur, nb_joueur, carte, x, y);
               if (carte[x - 1][y] == 49)
             {
                 x = x - 1;
@@ -274,5 +255,3 @@ int main()
     }
     return 0;
 } 
-
-
