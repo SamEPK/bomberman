@@ -13,6 +13,30 @@
     }
  }
 
+void placePlayer(int r,int c,int playerNumber,char** arr){
+    if (playerNumber==1){
+        arr[1][1]='p';
+    }
+    if (playerNumber==2){
+        arr[1][c-2]='p';
+    }
+    if (playerNumber==3){
+        arr[r-2][1]='p';
+    }
+    if (playerNumber==4){
+        arr[r-2][c-2]='p';
+    }
+}
+
+void placePlayers(int r,int c,int playerNumber,char** arr){
+    for(int i=1; i<=playerNumber; i++){
+    placePlayer(r,c,i,arr);
+    }
+}
+
+
+
+
 int main()
 {
     int r=8, c=7, i, j;
@@ -31,7 +55,9 @@ int main()
  
     
     mapOutsideWalls(r,c,arr);
-    
+    placePlayers(r ,c ,4, arr);
+
+
     for (i = 0; i < r; i++){
         for (j = 0; j < c; j++){
             printf("%c ", arr[i][j]);    
@@ -41,6 +67,5 @@ int main()
  
     for (int i = 0; i < r; i++)
         free(arr[i]);
- 
     return 0;
 }
