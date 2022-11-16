@@ -1,5 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <conio.h>
+#define ESPACE 32
+#define HAUT 72
+#define BAS 80
+#define GAUCHE 75
+#define DROITE 77
 
 void mapOutsideWalls(int r, int c, char **arr)
 {
@@ -34,6 +40,7 @@ void mapInsideWalls(int r, int c, char **arr)
     }
 }
 
+
 void placePlayer(int r, int c, int playerNumber, char **arr)
 {
     if (playerNumber == 1)
@@ -62,6 +69,26 @@ void placePlayers(int r, int c, int playerNumber, char **arr)
     }
 }
 
+void spaceAroundPlayer(int r, int c, char **arr)
+{
+    for (int i = 0; i < r; i++)
+    {
+        for (int j = 0; j < c; j++)
+        {
+            if (arr[i][j] == 'p'){
+                if(arr[i-1][j]=='m')arr[i-1][j]=' ';
+                if(arr[i][j-1]=='m')arr[i][j-1]=' ';
+                if(arr[i+1][j]=='m')arr[i+1][j]=' ';
+                if(arr[i][j+1]=='m')arr[i][j+1]=' ';
+            }
+        }
+    }
+}
+
+void playerMove(int r, int c, char **arr){
+    
+}
+
 int main()
 {
     int r = 9, c = 7, i, j;
@@ -79,6 +106,7 @@ int main()
     mapOutsideWalls(r, c, arr);
     mapInsideWalls(r,c,arr);
     placePlayers(r, c, 4, arr);
+    spaceAroundPlayer(r,c,arr);
 
     for (i = 0; i < r; i++)
     {
