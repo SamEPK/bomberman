@@ -1,12 +1,28 @@
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <sys/types.h>
 #include <conio.h>
+
 #define ESPACE 32
 #define HAUT 72
 #define BAS 80
 #define GAUCHE 75
 #define DROITE 77
 
+
+void printMap(int r, int c, char **arr){
+    for (int i = 0; i < r; i++)
+    {
+        for (int j = 0; j < c; j++)
+        {
+            printf("%c ", arr[i][j]);
+        }
+        printf("\n");
+    }
+}
 void mapOutsideWalls(int r, int c, char **arr)
 {
     for (int i = 0; i < r; i++)
@@ -86,7 +102,48 @@ void spaceAroundPlayer(int r, int c, char **arr)
 }
 
 void playerMove(int r, int c, char **arr){
-    
+     int touche = 0;
+    touche = getch();
+    switch (touche)
+    {
+    case HAUT:
+            if (arr[r - 1][c] != 'x' && arr[r - 1][c] != 'm')
+            {
+                arr[r][c] = ' ';
+                r--;
+                arr[r][c] = 'p';
+            }
+        break;
+    case BAS:
+            if (arr[r + 1][c] != 'x'  && arr[r+1] [c] != 'm')
+            {
+                arr[r][c] = ' ';
+                r++;
+                arr[r][c] = 'p';
+            }
+        break;
+    case GAUCHE:
+            if (arr[r][c - 1] != 'x' && arr[r][c- 1] != 'm')
+            {
+                arr[r][c] = ' ';
+                c--;
+                arr[r][c] = 'p';
+            }
+        break;
+    case DROITE:
+            if (arr[r][c+ 1] != 'x' && arr[r][c+ 1] != 'm')
+            {
+                arr[r][c] = ' ';
+                c++;
+                arr[r][c] = 'p';
+            }
+        break;
+    // case ESPACE:
+        // poser_bombe(longeur, largeur, nb_joueur, arr, r, c);
+        // break;
+    } 
+     system("cls");
+     printMap(9,7,arr);
 }
 
 int main()
@@ -107,16 +164,16 @@ int main()
     mapInsideWalls(r,c,arr);
     placePlayers(r, c, 4, arr);
     spaceAroundPlayer(r,c,arr);
+   
 
-    for (i = 0; i < r; i++)
-    {
-        for (j = 0; j < c; j++)
-        {
-            printf("%c ", arr[i][j]);
-        }
-        printf("\n");
-    }
 
+    
+         printMap(r,c,arr);
+
+         while(1){
+        playerMove(1,1,arr);    }
+    
+    
     for (int i = 0; i < r; i++)
         free(arr[i]);
     return 0;
